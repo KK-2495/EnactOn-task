@@ -8,7 +8,7 @@ https://github.com/KK-2495/EnactOn-task
 
 ### Recorded Video
 
-https://drive.google.com/file/d/1ZLwTsR4vi5jRCLQLsPK0TBHGnah4ny10/view?usp=drive_link
+https://drive.google.com/file/d/1UZvUn9nWLq-dZANHmYOEh8G_dAhX18lG/view?usp=sharing
 
 ### Setting Up the Project
 
