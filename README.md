@@ -35,6 +35,6 @@ To set up the project locally, follow these steps:
 
 #### Product Operations (Create/Edit/Delete)
 
-10. **Create Product**: Creates the product and it updates on DB.
-11. **Edit Product**: Updates the product information in DB.
-12. **Delete Product**: Reomves the product from the Db.
+ **Create Product**: Creates the product and it updates on DB.
+ **Edit Product**: Updates the product information in DB.
+ **Delete Product**: Reomves the product from the Db.
