@@ -9,17 +9,19 @@ import { revalidatePath } from "next/cache";
 import { authOptions } from "@/utils/authOptions";
 import { cache } from "react";
 
+
 export async function getProducts(pageNo = 1, pageSize = DEFAULT_PAGE_SIZE) {
   try {
     let products;
     let dbQuery = db.selectFrom("products").selectAll("products");
+    
 
     const { count } = await dbQuery
       // .select(sql`COUNT(DISTINCT products.id) as count`)
       .executeTakeFirst();
-
+//alert({count});
     const lastPage = Math.ceil(count / pageSize);
-
+//console.log(lastPage);
     products = await dbQuery
       .distinct()
       .offset((pageNo - 1) * pageSize)
@@ -143,5 +145,39 @@ export async function getProductCategories(productId: number) {
     return categories;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function addProduct(value: InsertProducts) {
+  try {
+    // if (!value.name) {
+    //   return { error: "Brand name is required" };
+    // }
+
+    await db.insertInto("products").values(value).execute();
+
+    revalidatePath("/products");
+    return { message: "success" };
+  } catch (err: any) {
+    return { error: err.message };
+  }
+}
+
+export async function updateProduct(productsId: number, value: updateProduct) {
+  try {
+    // if (!value.name) {
+    //   return { error: "Brand name is required" };
+    // }
+
+    await db
+      .updateTable("products")
+      .set(value)
+      .where("products.id", "=", productsId)
+      .execute();
+
+    revalidatePath("/products");
+    return { message: "success" };
+  } catch (err: any) {
+    return { error: err.message };
   }
 }

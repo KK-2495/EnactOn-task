@@ -24,7 +24,12 @@ function SortBy() {
         id="sorting"
         value={String(searchParams.get("sortBy"))}
         onChange={(e) => {
-          alert("Please update the code.");
+          // alert("Please update the code.");
+          searchParams.set("sortBy", e.target.value);
+          const newUrl = `${
+            window.location.pathname
+          }?${searchParams.toString()}`;
+          router.push(newUrl);
         }}
       >
         <option value="">None</option>

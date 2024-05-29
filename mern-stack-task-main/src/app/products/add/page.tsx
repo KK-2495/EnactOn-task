@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { occasionOptions } from "../../../../constant";
 import Select from "react-select";
+import { InsertProducts } from "@/types";
+import { string } from "yup";
+import { addProduct } from "@/actions/productActions";
+import { toast } from "react-toastify";
 
 function AddProduct() {
   const [brandsOption, setBrandsOption] = useState([]);
@@ -42,7 +46,51 @@ function AddProduct() {
     validationSchema: basicSchema,
 
     onSubmit: async (values: any, actions) => {
-      alert("Please Update the Code");
+      //alert("Please Update the Code");
+      console.log(values.brands.length);
+      var _brandsval = "";
+      var _occasionval = "";
+      var a = "";
+      for (var i = 0; i < values.brands.length; i++) {
+        if (i > 0) {
+          a = ",";
+        }
+        _brandsval = _brandsval + a + values.brands[i].value;
+        console.log(values.brands[i].value);
+      }
+      a = "";
+      for (var i = 0; i < values.occasion.length; i++) {
+        if (i > 0) {
+          a = ",";
+        }
+        _occasionval = _occasionval + a + values.occasion[i].value;
+        console.log(values.occasion[i].value);
+      }
+      // console.log(values.occasion);
+
+      const value: InsertProducts = {
+        brands: values.brands.length > 0 ? "[" + _brandsval + "]" : _brandsval,
+        colors: values.colors,
+        created_at: values.created_at,
+        description: values.description,
+        discount: values.discount,
+        gender: values.gender,
+        id: 0,
+        image_url: values.image_url,
+        name: values.name,
+        occasion: _occasionval,
+        old_price: values.old_price,
+        price: 0.0,
+        rating: values.rating,
+        updated_at: values.updated_at,
+      };
+      const { error } = await addProduct(value);
+      if (error) {
+        toast.error(error);
+        return;
+      }
+      toast.success("Product added successfully");
+      router.push("/products");
     },
   });
 

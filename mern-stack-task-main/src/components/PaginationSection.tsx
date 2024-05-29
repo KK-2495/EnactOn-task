@@ -12,16 +12,30 @@ function PaginationSection({
   pageSize: number;
 }) {
   const router = useRouter();
-
   const query = useSearchParams();
   const searchParams = new URLSearchParams(query);
-
+  lastPage = 10;
   function handlePrev() {
-    alert("Please update the code.");
+    // alert("Please update the code.");
+    if (pageNo > 1) {
+      searchParams.set("page", (pageNo - 1).toString());
+      router.push(`?${searchParams.toString()}`);
+    }
   }
 
   function handleNext() {
-    alert("Please update the code.");
+    // alert("Please update the code.");
+    if (pageNo < lastPage) {
+      searchParams.set("page", (pageNo + 1).toString());
+      router.push(`?${searchParams.toString()}`);
+    }
+  }
+
+  function handlePageSizeChange(e) {
+    const newSize = parseInt(e.target.value);
+    searchParams.set("pageSize", newSize.toString());
+    searchParams.set("page", "1");
+    router.push(`?${searchParams.toString()}`);
   }
 
   return (
@@ -30,9 +44,12 @@ function PaginationSection({
         value={pageSize}
         name="page-size"
         className="text-black"
-        onChange={(e) => {
-          alert("Please update the code.");
-        }}
+        // onChange={(e) => {
+        //   //alert("Please update the code.");
+        //   pageSize = parseInt(e.target.value);
+        //   alert(pageSize);
+        // }}
+        onChange={handlePageSizeChange}
       >
         {["10", "25", "50"].map((val) => {
           return (
@@ -50,7 +67,8 @@ function PaginationSection({
         &larr;Prev
       </button>
       <p>
-        Page {pageNo} of {lastPage}{" "}
+        {/* Page {pageNo} of {lastPage}{" "} */}
+        Page {pageNo} of {lastPage}
       </p>
       <button
         className="p-3 bg-slate-300 text-black disabled:cursor-not-allowed"

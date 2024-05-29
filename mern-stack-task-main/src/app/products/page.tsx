@@ -13,7 +13,10 @@ export default async function Products({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const { page = 1, pageSize = DEFAULT_PAGE_SIZE } = searchParams as any;
+  const {
+    page = 1,
+    pageSize = DEFAULT_PAGE_SIZE,
+  } = searchParams as any;
 
   const { products, lastPage, numOfResultsOnCurPage } = await getProducts(
     +page,
@@ -21,8 +24,8 @@ export default async function Products({
   );
 
   const brands = await getBrands();
+  //console.log(brands, "brands test");
   const categories = await getCategories();
-
   return (
     <div className="pb-20 pt-8">
       <h1 className="text-4xl mb-8">Product List</h1>

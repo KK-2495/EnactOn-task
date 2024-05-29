@@ -63,12 +63,16 @@ function Filter({ categories, brands }) {
       return [];
     }
   });
-  const [selectedGender, setSelectedGender] = useState(
-    () => searchParams.get("gender") || ""
+  const [selectedGender, setSelectedGender] = useState(() =>
+    searchParams.get("gender")
   );
+  // alert(searchParams.get("gender"));
   const [sliderValue, setSliderValue] = useState(
-    () => searchParams.get("priceRangeTo") || 2000
+    () => searchParams.get("priceRangeTo") //|| 2000
+    // ? 2000
+    // : searchParams.get("priceRangeTo")
   );
+  console.log(searchParams.get("priceRangeTo"));
 
   const [sliderChanged, setSliderChanged] = useState(false);
 
@@ -125,28 +129,52 @@ function Filter({ categories, brands }) {
     }
   }, [sliderValue]);
 
-  function handleBrandsSelect(e) {
-    alert("Please update the code.");
+  function handleBrandsSelect(selectedOptions) {
+    // alert("Please update the code.");
+    // const brandIds = selectedOptions.map((option) => option.value).join(",");
+    const brandIds = selectedOptions.map((option) => option.value);
+    searchParams.set("brandId", brandIds);
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.push(newUrl);
   }
 
-  function handleCategoriesSelected(e) {
-    alert("Please update the code.");
+  function handleCategoriesSelected(selectedOptions) {
+    // alert("Please update the code.");
+    const categoryIds = selectedOptions.map((option) => option.value);
+    setCategoriesSelected(selectedOptions);
+    searchParams.set("categoryId", categoryIds);
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.push(newUrl);
   }
 
   function handleSlider(e) {
-    alert("Please update the code.");
+    // alert("Please update the code.");
+    const { value } = e.target;
+    searchParams.set("priceRangeTo", value);
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.push(newUrl);
   }
 
-  const handleGenderChange = (e) => {
-    alert("Please update the code.");
-  };
+  function handleGenderChange(e) {
+    const { value } = e.target;
+    searchParams.set("gender", value);
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.push(newUrl);
+  }
 
   function handleOccasions(e) {
-    alert("Please update the code.");
+    // alert("Please update the code.");
+    const occasionIds = e.map((option) => option.value);
+    searchParams.set("occasions", occasionIds);
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.push(newUrl);
   }
 
-  function handleDiscount(e) {
-    alert("Please update the code.");
+  function handleDiscount(selectedOptions) {
+    // alert("Please update the code.");
+    searchParams.set("discount", selectedOptions.value);
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.push(newUrl);
   }
 
   // function handleClearAll() {
@@ -190,7 +218,7 @@ function Filter({ categories, brands }) {
       <div>
         <span>Select products from Range 1 to 2000</span>
         <br />
-        <span>Current Value {sliderValue}</span> <br />
+        <span>Current Value {searchParams.get("priceRangeTo")}</span> <br />
         <input
           type="range"
           step="50"
@@ -207,7 +235,7 @@ function Filter({ categories, brands }) {
           id="none"
           name="gender"
           value=""
-          checked={selectedGender === ""}
+          checked={searchParams.get("gender")=== ""}
           onChange={handleGenderChange}
         />
         <label htmlFor="none">None</label> <br />
@@ -216,7 +244,7 @@ function Filter({ categories, brands }) {
           id="men"
           name="gender"
           value="men"
-          checked={selectedGender === "men"}
+          checked={searchParams.get("gender")=== "men"}
           onChange={handleGenderChange}
         />
         <label htmlFor="men">Men</label>
@@ -226,7 +254,7 @@ function Filter({ categories, brands }) {
           id="women"
           name="gender"
           value="women"
-          checked={selectedGender === "women"}
+          checked={searchParams.get("gender") === "women"}
           onChange={handleGenderChange}
         />
         <label htmlFor="women">Women</label>
@@ -236,7 +264,7 @@ function Filter({ categories, brands }) {
           id="boy"
           name="gender"
           value="boy"
-          checked={selectedGender === "boy"}
+          checked={searchParams.get("gender")=== "boy"}
           onChange={handleGenderChange}
         />
         <label htmlFor="boy">Boy</label>
@@ -246,7 +274,7 @@ function Filter({ categories, brands }) {
           id="girl"
           name="gender"
           value="girl"
-          checked={selectedGender === "girl"}
+          checked={searchParams.get("gender")=== "girl"}
           onChange={handleGenderChange}
         />
         <label htmlFor="girl">Girl</label>

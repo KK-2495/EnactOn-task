@@ -61,7 +61,52 @@ function EditProduct({ params }: { params: { id: string } }) {
     validationSchema: basicSchema,
 
     onSubmit: async (values, actions) => {
-      alert("Please update the code.");
+      //alert("Please update the code.");
+      //alert(params.id);
+      //console.log(values.id);
+      var _brandsval = "";
+      var _occasionval = "";
+      var a = "";
+      for (var i = 0; i < values.brands.length; i++) {
+        if (i > 0) {
+          a = ",";
+        }
+        _brandsval = _brandsval + a + values.brands[i].value;
+        console.log(values.brands[i].value);
+      }
+      a = "";
+      for (var i = 0; i < values.occasion.length; i++) {
+        if (i > 0) {
+          a = ",";
+        }
+        _occasionval = _occasionval + a + values.occasion[i].value;
+        console.log(values.occasion[i].value);
+      }
+      console.log(values.occasion);
+
+      const value: UpdateProducts = {
+        brands: values.brands.length > 0 ? "[" + _brandsval + "]" : _brandsval,
+        colors: values.colors,
+        created_at: values.created_at,
+        description: values.description,
+        discount: values.discount,
+        gender: values.gender,
+        id: params.id,
+        image_url: values.image_url,
+        name: values.name,
+        occasion: _occasionval,
+        old_price: values.old_price,
+        price: 0.0,
+        rating: values.rating,
+        updated_at: values.updated_at,
+      };
+      const { error } = await updateProduct(params.id, value);
+      if (error) {
+        toast.error(error);
+        return;
+      }
+      toast.success("Product updated successfully");
+      router.push("/products");
     },
   });
 
