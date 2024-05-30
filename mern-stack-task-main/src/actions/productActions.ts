@@ -10,11 +10,32 @@ import { authOptions } from "@/utils/authOptions";
 import { cache } from "react";
 
 
-export async function getProducts(pageNo = 1, pageSize = DEFAULT_PAGE_SIZE) {
+export async function getProducts(pageNo = 1, pageSize = DEFAULT_PAGE_SIZE, gender,sortBy, categoryId, priceRangeTo, discount, brandId, occasions) {
   try {
     let products;
-    let dbQuery = db.selectFrom("products").selectAll("products");
+    let dbQuery = db.selectFrom("products").selectAll("products")
     
+    if (gender) {
+      dbQuery = dbQuery.where('products.gender', '=', gender);
+    }
+    if (categoryId) {
+      dbQuery = dbQuery.where('products.categoryId', '=', categoryId);
+    }
+    if (priceRangeTo) {
+      dbQuery = dbQuery.where('products.price', '<=', priceRangeTo);
+    }
+    if (discount) {
+      dbQuery = dbQuery.where('products.discount', '>=', parseFloat(discount.split('-')[0])).where('products.discount', '<=', parseFloat(discount.split('-')[1]));
+    }
+    if (brandId) {
+      dbQuery = dbQuery.where('products.brands', 'like','%'+ brandId +'%');
+    }
+    if (occasions && occasions.length > 0) {
+      dbQuery = dbQuery.where('products.occasion', 'like', '%'+occasions+'%');
+    }
+    if (sortBy) {
+      dbQuery = dbQuery.orderBy("products."+sortBy.split('-')[0], sortBy.split('-')[1]);
+    }
 
     const { count } = await dbQuery
       // .select(sql`COUNT(DISTINCT products.id) as count`)
@@ -43,6 +64,20 @@ export const getProduct = cache(async function getProduct(productId: number) {
       .selectFrom("products")
       .selectAll()
       .where("id", "=", productId)
+      .execute();
+
+    return product;
+  } catch (error) {
+    return { error: "Could not find the product" };
+  }
+});
+export const getProductParam = cache(async function getProductParam(gender: string) {
+  // console.log("run");
+  try {
+    const product = await db
+      .selectFrom("products")
+      .selectAll()
+      .where("gender", "=", gender)
       .execute();
 
     return product;

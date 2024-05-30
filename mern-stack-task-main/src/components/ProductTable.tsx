@@ -4,8 +4,11 @@ import {
 } from "@/actions/productActions";
 import ProductRow from "./ProductRow";
 import Empty from "./Empty";
+import { useQueryParams } from "@/hooks/useQueryParams";
+import { toast } from "react-toastify";
 
 async function ProductTable({ products, numOfResultsOnCurPage }) {
+  // console.log(gender);
   if (products.length === 0) {
     return <Empty />;
   }
@@ -41,6 +44,7 @@ async function ProductTable({ products, numOfResultsOnCurPage }) {
         </tr>
       </thead>
       <tbody>
+        {/* {products.map((product) => { */}
         {products.map((product) => {
           return (
             <ProductRow

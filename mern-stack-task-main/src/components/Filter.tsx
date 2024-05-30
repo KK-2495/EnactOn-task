@@ -23,6 +23,7 @@ function Filter({ categories, brands }) {
   const searchParams = useQueryParams();
   const router = useRouter();
 
+  //alert(searchParams.get("sortBy"))
   const brandsOption: any[] = useMemo(() => {
     return brands.map((brand: any) => ({
       value: brand.id,
@@ -72,7 +73,7 @@ function Filter({ categories, brands }) {
     // ? 2000
     // : searchParams.get("priceRangeTo")
   );
-  console.log(searchParams.get("priceRangeTo"));
+  // console.log(searchParams.get("priceRangeTo"));
 
   const [sliderChanged, setSliderChanged] = useState(false);
 
@@ -234,7 +235,7 @@ function Filter({ categories, brands }) {
           id="none"
           name="gender"
           value=""
-          checked={searchParams.get("gender")=== ""}
+          checked={searchParams.get("gender") === ""}
           onChange={handleGenderChange}
         />
         <label htmlFor="none">None</label> <br />
@@ -243,7 +244,7 @@ function Filter({ categories, brands }) {
           id="men"
           name="gender"
           value="men"
-          checked={searchParams.get("gender")=== "men"}
+          checked={searchParams.get("gender") === "men"}
           onChange={handleGenderChange}
         />
         <label htmlFor="men">Men</label>
@@ -263,7 +264,7 @@ function Filter({ categories, brands }) {
           id="boy"
           name="gender"
           value="boy"
-          checked={searchParams.get("gender")=== "boy"}
+          checked={searchParams.get("gender") === "boy"}
           onChange={handleGenderChange}
         />
         <label htmlFor="boy">Boy</label>
@@ -273,7 +274,7 @@ function Filter({ categories, brands }) {
           id="girl"
           name="gender"
           value="girl"
-          checked={searchParams.get("gender")=== "girl"}
+          checked={searchParams.get("gender") === "girl"}
           onChange={handleGenderChange}
         />
         <label htmlFor="girl">Girl</label>

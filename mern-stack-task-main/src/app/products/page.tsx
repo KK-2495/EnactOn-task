@@ -13,18 +13,30 @@ export default async function Products({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const {
-    page = 1,
-    pageSize = DEFAULT_PAGE_SIZE,
-  } = searchParams as any;
+  const { page = 1, pageSize = DEFAULT_PAGE_SIZE } = searchParams as any;
+
+  const genderValue = searchParams?.gender || "";
+  const sortByValue = searchParams?.sortBy || "";
+  const categoryIdValue = searchParams?.categoryId || "";
+  const priceRangeToValue = searchParams?.priceRangeTo || "";
+  const discountValue = searchParams?.discount || "";
+  const brandIdValue = searchParams?.brandId || "";
+  const occasionsValue = searchParams?.occasions || "";
 
   const { products, lastPage, numOfResultsOnCurPage } = await getProducts(
     +page,
-    +pageSize
+    +pageSize,
+    genderValue,
+    sortByValue,
+    categoryIdValue,
+    priceRangeToValue,
+    discountValue,
+    brandIdValue,
+    occasionsValue
   );
 
   const brands = await getBrands();
-  //console.log(brands, "brands test");
+  // console.log(products, "brands test");
   const categories = await getCategories();
   return (
     <div className="pb-20 pt-8">
@@ -38,6 +50,7 @@ export default async function Products({
 
       <h1 className="text-lg font-bold mb-4">Products</h1>
       <Suspense
+        // key={genderValue + sortByValue}
         fallback={<p className="text-gray-300 text-2xl">Loading Products...</p>}
       >
         <ProductTable
