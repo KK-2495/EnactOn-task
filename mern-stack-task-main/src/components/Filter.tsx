@@ -131,7 +131,6 @@ function Filter({ categories, brands }) {
 
   function handleBrandsSelect(selectedOptions) {
     // alert("Please update the code.");
-    // const brandIds = selectedOptions.map((option) => option.value).join(",");
     const brandIds = selectedOptions.map((option) => option.value);
     searchParams.set("brandId", brandIds);
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
