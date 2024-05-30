@@ -10,6 +10,10 @@ https://github.com/KK-2495/EnactOn-task
 
 https://drive.google.com/file/d/1UZvUn9nWLq-dZANHmYOEh8G_dAhX18lG/view?usp=sharing
 
+Updated Filter section 
+
+https://drive.google.com/file/d/10jP5pbZnkEpDvQkfk3-laJr7ouEHH2mg/view?usp=drivesdk
+
 ### Setting Up the Project
 
 To set up the project locally, follow these steps:
